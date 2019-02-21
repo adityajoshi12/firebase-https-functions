@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const Firestore = require('@google-cloud/firestore')
 const admin = require('firebase-admin');
-
+const cron = require("node-cron");
 admin.initializeApp();
 const validator = require('validator');
 exports.discount = functions.https.onRequest((req, res) => {
@@ -25,7 +25,11 @@ exports.discount = functions.https.onRequest((req, res) => {
             break;
 
         case 'PUT':
-            console.log('PUT');
+            
+            res.status(200).send(`cron job started: seconds `);
+            cron.schedule("* * * * * *", function() {
+                console.log("running a task every minute");
+              });
             break;
 
         default:
